@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+import portrait from "../assets/rakesh.webp";
 import { profile } from "../data/site";
 const facts = [
   { k: "Experience", v: profile.years + " years" },
@@ -24,11 +26,14 @@ const cards = [
         <p>{profile.summary}</p>
         <p style="margin-top:14px">I care about code that ships — measurable test coverage, cloud architecture that scales, and AI systems that actually automate work instead of demoing it. Outside code I'm a contributor to open source and an AWS Cloud Practitioner.</p>
       </div>
-      <div class="about-facts">
-        {facts.map((f) => (
-          <div class="fact"><span class="k">{f.k}</span><span class="v">{f.v}</span></div>
-        ))}
-      </div>
+      <figure class="portrait" data-reveal>
+        <Image src={portrait} alt={`${profile.fullName}, ${profile.title}`} width={600} height={600} sizes="(max-width:768px) 90vw, 340px" loading="lazy" decoding="async" />
+      </figure>
+    </div>
+    <div class="about-facts" data-reveal>
+      {facts.map((f) => (
+        <div class="fact"><span class="k">{f.k}</span><span class="v">{f.v}</span></div>
+      ))}
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:44px">
       {cards.map((c) => (
