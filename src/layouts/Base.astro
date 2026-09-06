@@ -85,11 +85,36 @@ const htmlTitle = title ?? `${profile.firstName} ${profile.lastName} · ${profil
         });
       });
 
-      // reveal-on-scroll
-      const io = new IntersectionObserver((es) => {
-        es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
-      }, { threshold: 0.12 });
-      document.querySelectorAll("[data-reveal]").forEach((el) => io.observe(el));
+      // reveal-on-scroll — Apple-style cascade: items in the same row/grid
+      // reveal one after another (small per-index delay) as the section
+      // scrolls into view. Respects prefers-reduced-motion (CSS handles it).
+      const revealers = Array.from(document.querySelectorAll("[data-reveal]"));
+      // Assign a stagger index per sibling group (same parent). Lone items = 0.
+      const groups = new Map();
+      revealers.forEach((el) => {
+        const p = el.parentElement;
+        if (!groups.has(p)) {
+          const sibs = Array.from(p.children).filter((c) => c.hasAttribute("data-reveal"));
+          groups.set(p, sibs);
+        }
+      });
+      const io = new IntersectionObserver(
+        (es) => {
+          es.forEach((e) => {
+            if (!e.isIntersecting) return;
+            const group = groups.get(e.target.parentElement) || [e.target];
+            group.forEach((el, i) => {
+              if (el.classList.contains("in")) return;
+              el.style.transitionDelay = Math.min(i * 90, 540) + "ms";
+              el.classList.add("in");
+              io.unobserve(el);
+              el.addEventListener("transitionend", () => { el.style.transitionDelay = ""; }, { once: true });
+            });
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -6% 0px" }
+      );
+      revealers.forEach((el) => io.observe(el));
 
       // mobile nav
       const btn = document.querySelector("#menu-btn");

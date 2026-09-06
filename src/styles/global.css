@@ -238,9 +238,17 @@ html[data-theme="dark"] .t-dot { background: var(--surface); }
 .foot { border-top:1px solid var(--border); padding: 26px 0; color: var(--text-3); font-size:0.85rem; }
 .foot-inner { display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; align-items:center; }
 
-/* reveal-on-scroll */
-[data-reveal] { opacity:0; transform: translateY(20px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
-[data-reveal].in { opacity:1; transform:none; }
+/* ---------- reveal-on-scroll (Apple-style cascade) ---------- */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(30px) scale(0.99);
+  transition: opacity 0.75s var(--ease), transform 0.75s var(--ease);
+  will-change: opacity, transform;
+}
+[data-reveal].in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { opacity: 1; transform: none; transition: none; }
+}
 
 /* responsive nav */
 .menu-btn { display:none; background:none; border:none; cursor:pointer; color: var(--text); }
