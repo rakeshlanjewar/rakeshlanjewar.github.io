@@ -1,0 +1,28 @@
+---
+import { certs, education } from "../data/site";
+---
+
+<section id="education" class="sec">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="sec-num">05.</span><h2>Education & Certifications</h2><div class="rule"></div>
+    </div>
+    <div class="duo-grid">
+      {education.map((e) => (
+        <div class="edu" data-reveal>
+          <span class="when">{e.year}</span>
+          <h3>{e.degree}</h3>
+          <p>{e.school}</p>
+        </div>
+      ))}
+      {certs.map((c) => (
+        <div class="edu" data-reveal>
+          <span class="when">{c.date}</span>
+          <h3 style="margin-top:10px">{c.name}</h3>
+          <p>AWS · Amazon Web Services</p>
+          <span class="badge">Certified</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

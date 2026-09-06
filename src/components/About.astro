@@ -1,0 +1,43 @@
+---
+import { profile } from "../data/site";
+const facts = [
+  { k: "Experience", v: profile.years + " years" },
+  { k: "Location", v: profile.location },
+  { k: "Currently", v: "Sanofi Healthcare" },
+  { k: "Certification", v: "AWS Cloud Practitioner" },
+  { k: "Languages", v: "English · Hindi · Marathi" },
+];
+const cards = [
+  { t: "Scalable Architecture", d: "Serverless AWS (ECS/Fargate, SQS, S3) powering GxP-compliant pharma platforms.", n: "01" },
+  { t: "AI in Production", d: "Autonomous agents, MCP servers and LangChain prototypes automating engineering workflows.", n: "02" },
+  { t: "Full-Stack Craft", d: "NestJS, GraphQL, TypeORM and Vue 3 — clean, tested, maintainable systems.", n: "03" },
+];
+---
+
+<section id="about" class="sec">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="sec-num">01.</span><h2>About me</h2><div class="rule"></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-text" data-reveal>
+        <p>{profile.summary}</p>
+        <p style="margin-top:14px">I care about code that ships — measurable test coverage, cloud architecture that scales, and AI systems that actually automate work instead of demoing it. Outside code I'm a contributor to open source and an AWS Cloud Practitioner.</p>
+      </div>
+      <div class="about-facts">
+        {facts.map((f) => (
+          <div class="fact"><span class="k">{f.k}</span><span class="v">{f.v}</span></div>
+        ))}
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:44px">
+      {cards.map((c) => (
+        <div class="skill-card" data-reveal>
+          <div style="font-family:var(--font-mono);color:var(--accent);font-size:.8rem">{c.n}</div>
+          <h3 style="font-family:var(--font-sans);text-transform:none;letter-spacing:0;color:var(--text);font-size:1.05rem;margin:8px 0 6px">{c.t}</h3>
+          <p style="color:var(--text-2);font-size:.93rem">{c.d}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

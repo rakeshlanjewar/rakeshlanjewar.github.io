@@ -1,0 +1,11 @@
+---
+import { profile } from "../data/site";
+const year = new Date().getFullYear();
+---
+
+<footer class="foot">
+  <div class="wrap foot-inner">
+    <span>© {year} {profile.fullName}. Built with Astro.</span>
+    <span>Designed & developed with care.</span>
+  </div>
+</footer>
