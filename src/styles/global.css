@@ -235,7 +235,7 @@ html[data-theme="dark"] .t-dot { background: var(--surface); }
   background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent); font-weight:600; letter-spacing:.04em; }
 
 /* ---------- footer ---------- */
-.foot { border-top:1px solid var(--border); padding: 26px 0; color: var(--text-3); font-size:0.85rem; }
+.foot { border-top:1px solid var(--border); padding: 26px 0; color: var(--text-2); font-size:0.85rem; }
 .foot-inner { display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; align-items:center; }
 
 /* ---------- reveal-on-scroll (Apple-style cascade) ---------- */
