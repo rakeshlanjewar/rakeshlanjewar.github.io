@@ -1,0 +1,28 @@
+---
+const sections = [
+  { href: "#about", label: "About" },
+  { href: "#skills", label: "Skills" },
+  { href: "#projects", label: "Projects" },
+  { href: "#experience", label: "Experience" },
+  { href: "#education", label: "Education" },
+];
+---
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="/">
+      <span class="dot"></span> Rakesh Lanjewar
+    </a>
+    <nav class="nav-links" id="nav-links">
+      {sections.map((s) => <a href={s.href}>{s.label}</a>)}
+    </nav>
+    <div class="nav-actions">
+      <button class="toggle" data-theme-toggle type="button" aria-label="Toggle dark/light theme" title="Toggle theme">
+        <span class="knob" aria-hidden="true"></span>
+      </button>
+      <button class="menu-btn" id="menu-btn" aria-label="Menu" aria-expanded="false">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
