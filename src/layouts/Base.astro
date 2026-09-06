@@ -1,20 +1,25 @@
 ---
-// Shared layout. `variant`: "light" (Variant A, default route)
-//                    or "dark" (Variant B, /dark route)
+// Canonical layout. Single page — theme is switched client-side by flipping
+// the `data-theme` attribute on <html> (light|dark). Dark is the default
+// (chosen design). No per-route variants.
 import "../styles/global.css";
 import { profile } from "../data/site";
-interface Props {
-  variant?: "light" | "dark";
-  title?: string;
-}
-const { variant = "light", title } = Astro.props;
+interface Props { title?: string; }
+const { title } = Astro.props;
 const htmlTitle = title ?? `${profile.firstName} ${profile.lastName} · ${profile.title}`;
-const heroClass = variant === "dark" ? "hero grid-bg" : "hero";
 ---
 
 <!doctype html>
-<html lang="en" data-theme={variant}>
+<html lang="en" data-theme="dark">
   <head>
+    <script is:inline>
+      // Apply saved theme before first paint to avoid flash. Default: dark.
+      (function () {
+        var t = "dark";
+        try { t = localStorage.getItem("theme") || "dark"; } catch (e) {}
+        document.documentElement.setAttribute("data-theme", t === "light" ? "light" : "dark");
+      })();
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{htmlTitle}</title>
@@ -28,13 +33,20 @@ const heroClass = variant === "dark" ? "hero grid-bg" : "hero";
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-    <script is:inline>
-      // no-flash theme is per-route (each route is a distinct variant), so nothing needed here.
-    </script>
   </head>
   <body>
     <slot />
     <script is:inline>
+      // Theme toggle: flips <html data-theme> in place, persists choice.
+      document.querySelectorAll("[data-theme-toggle]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var html = document.documentElement;
+          var next = html.getAttribute("data-theme") === "light" ? "dark" : "light";
+          html.setAttribute("data-theme", next);
+          try { localStorage.setItem("theme", next); } catch (e) {}
+        });
+      });
+
       // reveal-on-scroll
       const io = new IntersectionObserver((es) => {
         es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });

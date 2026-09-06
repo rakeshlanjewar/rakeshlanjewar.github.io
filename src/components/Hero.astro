@@ -1,8 +1,5 @@
 ---
 import { profile } from "../data/site";
-interface Props { variant: "light" | "dark"; }
-const { variant } = Astro.props;
-const cls = variant === "dark" ? "hero grid-bg" : "hero";
 const file = "/Rakesh_Lanjewar_CV_July2026.pdf";
 const roleJson = JSON.stringify(profile.titleOptions);
 const ic = (p: string) =>
@@ -16,7 +13,7 @@ const icon = {
 };
 ---
 
-<section class={cls}>
+<section class="hero grid-bg">
   <div class="wrap hero-inner">
     <span class="eyebrow"><span class="pulse"></span> 8+ years · Full Stack · AI Engineering</span>
     <h1>Hi, I'm <span class="grad">{profile.firstName} {profile.lastName}</span>.</h1>
