@@ -1,9 +1,6 @@
 ---
 import { experience } from "../data/site";
-const fmt = (s: string, endLabel: string) => {
-  const d = (s: string) => new Date(s + "-01").toLocaleDateString("en-US", { month: "short", year: "numeric" });
-  return endLabel === "Present" ? `${d(experience[0].start)} — Present` : `${d(s)} — ${d(endLabel)}`;
-};
+import { formatExperienceRange } from "../utils/formatExperienceRange.js";
 ---
 
 <section id="experience" class="sec" style="background:color-mix(in srgb, var(--surface) 45%, transparent);border-block:1px solid var(--border)">
@@ -18,7 +15,7 @@ const fmt = (s: string, endLabel: string) => {
           <div class="t-head">
             <span class="t-role">{e.role}</span>
             <span class="t-loc">· {e.org}</span>
-            <span class="t-range">{fmt(e.start, e.endLabel ?? e.end)}</span>
+            <span class="t-range">{formatExperienceRange(e.start, e.end, e.endLabel)}</span>
           </div>
           <div style="color:var(--text-3);font-size:.9rem;margin-top:2px">{e.location}</div>
           <ul class="t-bullets">
