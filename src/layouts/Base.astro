@@ -4,6 +4,11 @@
 // (chosen design). No per-route variants.
 import "../styles/global.css";
 import { profile, skills, education } from "../data/site";
+
+// GA4 Measurement ID (set when the property is created; empty = disabled).
+const GA_ID = "G-XXXXXXXXXX";
+const gaEnabled = GA_ID && !GA_ID.startsWith("G-XXXXXXXXXX");
+
 interface Props { title?: string; }
 const { title } = Astro.props;
 const htmlTitle = title ?? `${profile.firstName} ${profile.lastName} · ${profile.title}`;
@@ -71,6 +76,18 @@ const htmlTitle = title ?? `${profile.firstName} ${profile.lastName} · ${profil
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    {gaEnabled && (
+      <>
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
+        <script is:inline define:vars={{ GA_ID }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', GA_ID, { anonymize_ip: true });
+        </script>
+      </>
+    )}
   </head>
   <body>
     <slot />
